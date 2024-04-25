@@ -5,7 +5,7 @@
 //  Created by student on 19/04/24.
 //
 
-import Foundation
+import CoreGraphics
 
 struct HexagonParameters {
     struct Segment {
