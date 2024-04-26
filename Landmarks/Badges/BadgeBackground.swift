@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+
 struct BadgeBackground: View {
     var body: some View {
         GeometryReader { geometry in
@@ -18,23 +19,27 @@ struct BadgeBackground: View {
                 width *= xScale
                 path.move(
                     to: CGPoint(
-                        x: width * 0.95,
+                        x: width * 0.95 + xOffset,
                         y: height * (0.20 + HexagonParameters.adjustment)
                     )
                 )
-                
-                HexagonParameters.segment.forEach { segment in path.addLine(
-                    to: CGPoint(
-                        x: width * segment.line.x + xOffset,
-                        y: height * segment.line.y
+
+
+                HexagonParameters.segments.forEach { segment in
+                    path.addLine(
+                        to: CGPoint(
+                            x: width * segment.line.x + xOffset,
+                            y: height * segment.line.y
+                        )
                     )
-                )
+
+
                     path.addQuadCurve(
                         to: CGPoint(
-                            x:width  * segment.curve.x + xOffset,
-                            y:height * segment.curve.y
+                            x: width * segment.curve.x + xOffset,
+                            y: height * segment.curve.y
                         ),
-                        control: CGPoint (
+                        control: CGPoint(
                             x: width * segment.control.x + xOffset,
                             y: height * segment.control.y
                         )
@@ -42,16 +47,17 @@ struct BadgeBackground: View {
                 }
             }
             .fill(.linearGradient(
-                            Gradient(colors: [Self.gradientStart, Self.gradientEnd]),
-                            startPoint: UnitPoint(x: 0.5, y: 0),
-                            endPoint: UnitPoint(x: 0.5, y: 0.6)
-                        ))
+                Gradient(colors: [Self.gradientStart, Self.gradientEnd]),
+                startPoint: UnitPoint(x: 0.5, y: 0),
+                endPoint: UnitPoint(x: 0.5, y: 0.6)
+            ))
         }
         .aspectRatio(1, contentMode: .fit)
     }
     static let gradientStart = Color(red: 239.0 / 255, green: 120.0 / 255, blue: 221.0 / 255)
-        static let gradientEnd = Color(red: 239.0 / 255, green: 172.0 / 255, blue: 120.0 / 255)
+    static let gradientEnd = Color(red: 239.0 / 255, green: 172.0 / 255, blue: 120.0 / 255)
 }
+
 
 #Preview {
     BadgeBackground()
